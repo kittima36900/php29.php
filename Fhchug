@@ -5,304 +5,196 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ระบบยืม-คืนหนังสือ</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #f8f9fa;
             font-family: 'Sarabun', sans-serif;
-            padding-bottom: 20px;
+            padding: 15px;
         }
         .header {
             background: linear-gradient(135deg, #4e73df 0%, #224abe 100%);
             color: white;
-            padding: 25px 0;
-            border-radius: 0 0 15px 15px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            text-align: center;
         }
         .card {
-            border-radius: 12px;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-            margin-bottom: 25px;
-            border: none;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
         }
-        .card-header {
-            background-color: #f8f9fc;
-            border-bottom: 1px solid #e3e6f0;
-            font-weight: bold;
-            padding: 15px 20px;
-            border-radius: 12px 12px 0 0 !important;
+        .btn-mobile {
+            padding: 12px;
+            font-size: 16px;
         }
-        .btn-primary {
-            background-color: #4e73df;
-            border-color: #4e73df;
-            padding: 10px 20px;
-            font-weight: 500;
-        }
-        .btn-primary:hover {
-            background-color: #2e59d9;
-            border-color: #2e59d9;
-            transform: translateY(-2px);
-            transition: all 0.2s;
-        }
-        .btn-sm {
-            padding: 5px 10px;
-            font-size: 0.875rem;
+        .form-control {
+            font-size: 16px; /* เพิ่มขนาดฟอนต์สำหรับมือถือ */
         }
         .table-responsive {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
-        }
-        .form-control:focus {
-            border-color: #4e73df;
-            box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.25);
-        }
-        .status-borrowed {
-            color: #e74a3b;
-            font-weight: bold;
-        }
-        .status-returned {
-            color: #1cc88a;
-            font-weight: bold;
-        }
-        .footer {
-            text-align: center;
-            padding: 25px 0;
-            margin-top: 40px;
-            color: #858796;
-            border-top: 1px solid #e3e6f0;
-        }
-        .stat-box {
-            background: linear-gradient(135deg, #f8f9fc 0%, #e3e6f0 100%);
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-        }
-        .form-label {
-            font-weight: 500;
-            margin-bottom: 8px;
-            color: #4e4e4e;
-        }
-        h1, h2, h3, h4, h5, h6 {
-            font-weight: 600;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div class="header text-center">
+    <div class="header">
         <h1>ระบบยืม-คืนหนังสือ</h1>
-        <p class="lead">สำหรับครูผู้ดูแล</p>
+        <p>สำหรับครูผู้ดูแล</p>
     </div>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">ฟอร์มกรอกข้อมูลการยืมหนังสือ</h5>
-                    </div>
-                    <div class="card-body">
-                        <form id="borrowForm">
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="studentId" class="form-label">รหัสนักเรียน</label>
-                                        <input type="text" class="form-control" id="studentId" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="bookId" class="form-label">ไอดีหนังสือ</label>
-                                        <input type="text" class="form-control" id="bookId" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="firstName" class="form-label">ชื่อนักเรียน</label>
-                                        <input type="text" class="form-control" id="firstName" required>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="lastName" class="form-label">นามสกุล</label>
-                                        <input type="text" class="form-control" id="lastName" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="classLevel" class="form-label">ระดับชั้น</label>
-                                        <select class="form-select" id="classLevel" required>
-                                            <option value="">เลือกระดับชั้น</option>
-                                            <option value="ม.1">มัธยมศึกษาปีที่ 1</option>
-                                            <option value="ม.2">มัธยมศึกษาปีที่ 2</option>
-                                            <option value="ม.3">มัธยมศึกษาปีที่ 3</option>
-                                            <option value="ม.4">มัธยมศึกษาปีที่ 4</option>
-                                            <option value="ม.5">มัธยมศึกษาปีที่ 5</option>
-                                            <option value="ม.6">มัธยมศึกษาปีที่ 6</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="studentNumber" class="form-label">เลขที่</label>
-                                        <input type="number" class="form-control" id="studentNumber" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="bookTitle" class="form-label">ชื่อหนังสือ</label>
-                                <input type="text" class="form-control" id="bookTitle" required>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="category" class="form-label">หมวดหมู่</label>
-                                        <select class="form-select" id="category" required>
-                                            <option value="">เลือกหมวดหมู่</option>
-                                            <option value="วรรณกรรม">วรรณกรรม</option>
-                                            <option value="วิทยาศาสตร์">วิทยาศาสตร์</option>
-                                            <option value="คณิตศาสตร์">คณิตศาสตร์</option>
-                                            <option value="ประวัติศาสตร์">ประวัติศาสตร์</option>
-                                            <option value="ภาษา">ภาษา</option>
-                                            <option value="อื่นๆ">อื่นๆ</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="mb-3">
-                                        <label for="borrowDate" class="form-label">วันที่ยืม</label>
-                                        <input type="date" class="form-control" id="borrowDate" required>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="returnDate" class="form-label">วันที่คืน</label>
-                                <input type="date" class="form-control" id="returnDate">
-                                <div class="form-text">เว้นว่างไว้หากหนังสือยังไม่ถูกคืน</div>
-                            </div>
-
-                            <div class="d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="fas fa-save me-2"></i>บันทึกข้อมูลการยืมหนังสือ
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+    <div class="container-fluid">
+        <!-- ปุ่มสลับระหว่างฟอร์มและรายการ -->
+        <div class="row mb-3">
+            <div class="col-6">
+                <button class="btn btn-primary w-100 btn-mobile" id="showFormBtn">ฟอร์มกรอกข้อมูล</button>
             </div>
+            <div class="col-6">
+                <button class="btn btn-outline-primary w-100 btn-mobile" id="showListBtn">รายการทั้งหมด</button>
+            </div>
+        </div>
 
-            <div class="col-md-6">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">รายการยืมหนังสือทั้งหมด</h5>
+        <!-- ฟอร์มกรอกข้อมูล -->
+        <div class="card" id="formSection">
+            <div class="card-header">
+                <h5>ฟอร์มกรอกข้อมูล</h5>
+            </div>
+            <div class="card-body">
+                <form id="borrowForm">
+                    <div class="mb-3">
+                        <label class="form-label">รหัสนักเรียน</label>
+                        <input type="text" class="form-control" required>
                     </div>
-                    <div class="card-body">
-                        <div class="table-responsive">
-                            <table class="table table-hover">
-                                <thead class="table-light">
-                                    <tr>
-                                        <th>รหัสนักเรียน</th>
-                                        <th>ชื่อ-สกุล</th>
-                                        <th>หนังสือ</th>
-                                        <th>สถานะ</th>
-                                        <th>การดำเนินการ</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>ST001</td>
-                                        <td>สมชาย ใจดี</td>
-                                        <td>คณิตศาสตร์พื้นฐาน</td>
-                                        <td><span class="status-borrowed">ยืม</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-success">คืนแล้ว</button>
-                                            <button class="btn btn-sm btn-danger">ลบ</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>ST005</td>
-                                        <td>สมหญิง เก่งเรียน</td>
-                                        <td>วิทยาศาสตร์โลก</td>
-                                        <td><span class="status-returned">คืนแล้ว</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-danger">ลบ</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>ST012</td>
-                                        <td>นักเรียน ตัวอย่าง</td>
-                                        <td>วรรณกรรมไทย</td>
-                                        <td><span class="status-borrowed">ยืม</span></td>
-                                        <td>
-                                            <button class="btn btn-sm btn-success">คืนแล้ว</button>
-                                            <button class="btn btn-sm btn-danger">ลบ</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">ชื่อนักเรียน</label>
+                        <input type="text" class="form-control" required>
                     </div>
-                </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">นามสกุล</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">ระดับชั้น</label>
+                        <select class="form-select" required>
+                            <option value="">เลือกระดับชั้น</option>
+                            <option value="ม.1">มัธยมศึกษาปีที่ 1</option>
+                            <option value="ม.2">มัธยมศึกษาปีที่ 2</option>
+                            <option value="ม.3">มัธยมศึกษาปีที่ 3</option>
+                            <option value="ม.4">มัธยมศึกษาปีที่ 4</option>
+                            <option value="ม.5">มัธยมศึกษาปีที่ 5</option>
+                            <option value="ม.6">มัธยมศึกษาปีที่ 6</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">เลขที่</label>
+                        <input type="number" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">ชื่อหนังสือ</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">หมวดหมู่</label>
+                        <select class="form-select" required>
+                            <option value="">เลือกหมวดหมู่</option>
+                            <option value="วรรณกรรม">วรรณกรรม</option>
+                            <option value="วิทยาศาสตร์">วิทยาศาสตร์</option>
+                            <option value="คณิตศาสตร์">คณิตศาสตร์</option>
+                            <option value="อื่นๆ">อื่นๆ</option>
+                        </select>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">ไอดีหนังสือ</label>
+                        <input type="text" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">วันที่ยืม</label>
+                        <input type="date" class="form-control" required>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label class="form-label">วันที่คืน</label>
+                        <input type="date" class="form-control">
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary w-100 btn-mobile">บันทึกข้อมูล</button>
+                </form>
+            </div>
+        </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title mb-0">สถิติการยืมหนังสือ</h5>
-                    </div>
-                    <div class="card-body">
-                        <div class="row text-center">
-                            <div class="col-4">
-                                <div class="stat-box">
-                                    <div class="h3">15</div>
-                                    <div class="text-muted">ยืมทั้งหมด</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="stat-box">
-                                    <div class="h3">9</div>
-                                    <div class="text-muted">คืนแล้ว</div>
-                                </div>
-                            </div>
-                            <div class="col-4">
-                                <div class="stat-box">
-                                    <div class="h3">6</div>
-                                    <div class="text-muted">ยังไม่คืน</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <!-- รายการทั้งหมด -->
+        <div class="card d-none" id="listSection">
+            <div class="card-header">
+                <h5>รายการยืมหนังสือ</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-sm">
+                        <thead>
+                            <tr>
+                                <th>รหัส</th>
+                                <th>ชื่อ</th>
+                                <th>หนังสือ</th>
+                                <th>สถานะ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>ST001</td>
+                                <td>สมชาย</td>
+                                <td>คณิตศาสตร์</td>
+                                <td><span class="badge bg-danger">ยืม</span></td>
+                            </tr>
+                            <tr>
+                                <td>ST005</td>
+                                <td>สมหญิง</td>
+                                <td>วิทยาศาสตร์</td>
+                                <td><span class="badge bg-success">คืน</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="footer">
-        <p>ระบบยืม-คืนหนังสือ © 2023 | พัฒนาสำหรับการจัดการห้องสมุดโรงเรียน</p>
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <script>
+        // ฟังก์ชันสลับระหว่างฟอร์มและรายการ
+        document.getElementById('showFormBtn').addEventListener('click', function() {
+            document.getElementById('formSection').classList.remove('d-none');
+            document.getElementById('listSection').classList.add('d-none');
+            this.classList.add('btn-primary');
+            this.classList.remove('btn-outline-primary');
+            document.getElementById('showListBtn').classList.remove('btn-primary');
+            document.getElementById('showListBtn').classList.add('btn-outline-primary');
+        });
+
+        document.getElementById('showListBtn').addEventListener('click', function() {
+            document.getElementById('formSection').classList.add('d-none');
+            document.getElementById('listSection').classList.remove('d-none');
+            this.classList.add('btn-primary');
+            this.classList.remove('btn-outline-primary');
+            document.getElementById('showFormBtn').classList.remove('btn-primary');
+            document.getElementById('showFormBtn').classList.add('btn-outline-primary');
+        });
+
         // ตั้งค่าวันที่เริ่มต้นเป็นวันปัจจุบัน
-        document.getElementById('borrowDate').valueAsDate = new Date();
+        document.querySelector('input[type="date"]').valueAsDate = new Date();
         
         // จัดการการส่งฟอร์ม
         document.getElementById('borrowForm').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('บันทึกข้อมูลการยืมหนังสือเรียบร้อยแล้ว!');
-            // ในทางปฏิบัติควรมีโค้ดสำหรับส่งข้อมูลไปยังเซิร์ฟเวอร์ที่นี่
+            alert('บันทึกข้อมูลเรียบร้อยแล้ว!');
             this.reset();
-            document.getElementById('borrowDate').valueAsDate = new Date();
+            document.querySelector('input[type="date"]').valueAsDate = new Date();
         });
     </script>
 </body>
